@@ -1,17 +1,30 @@
-import { Category } from "../model/Category";
-import { ICategoriesRepository } from "./ICategoriesRepository";
+import { Category } from "../../model/Category";
+import {
+  ICategoriesRepository,
+  ICreateCategoryDTO,
+} from "../ICategoriesRepository";
 
-// DTO => Data transfer object
-interface ICreateCategoryDTO {
-  name: string;
-  description: string;
-}
-
+// singleton ==> single instance
 class CategoriesRepository implements ICategoriesRepository {
   private categories: Category[];
 
-  constructor() {
+  private static INSTANCE: CategoriesRepository;
+
+  private constructor() {
     this.categories = [];
+  }
+
+  /**
+   * protects the constructor so the repository only can
+   * control it and instantiates based on the existance
+   * of a instance of the repository
+   */
+  public static getInstance(): CategoriesRepository {
+    if (!CategoriesRepository.INSTANCE) {
+      CategoriesRepository.INSTANCE = new CategoriesRepository();
+    }
+
+    return CategoriesRepository.INSTANCE;
   }
 
   create({ name, description }: ICreateCategoryDTO): void {

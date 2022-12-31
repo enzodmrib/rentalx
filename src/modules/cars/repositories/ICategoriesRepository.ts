@@ -1,5 +1,10 @@
 import { Category } from "../model/Category";
-import { ICreateCategoryDTO } from "./CategoriesRepository";
+
+// DTO ==> data transfer object ---> object that limits the visibility to who's sending the data
+interface ICreateCategoryDTO {
+  name: string;
+  description: string;
+}
 
 interface ICategoriesRepository {
   // myFunc: () => void; ===> this is a property
@@ -9,4 +14,4 @@ interface ICategoriesRepository {
   create({ name, description }: ICreateCategoryDTO): void;
 }
 
-export { ICategoriesRepository };
+export { ICategoriesRepository, ICreateCategoryDTO };
